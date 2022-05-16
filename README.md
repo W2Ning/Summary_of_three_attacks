@@ -6,6 +6,7 @@
 以下是对2022年上半年3个独立攻击事件的汇总分析, 虽然漏洞原理各不相同, 但他们都有一个共同点:
 
 攻击者不再只依赖`FlashLoan`进行`Single-Transaction-Attack`(我自己瞎起的说法).
+
 而是真金白银地砸出数百万美金去操纵价格,制造漏洞触发的前置环境, 最后成功完成恶意攻击.
 
 如果2022年之前的攻击者们还只是钻研代码, 空手套白狼的穷小子.
@@ -20,11 +21,11 @@
 
 ## Fortress
 
-2022年5月9日, 攻击者通过预言机合约`Chain.sol`的`submit()`函数未授权调用的问题,恶意操纵了`FTS`的价格, 
-用原本低价值`FTS`抵押借贷了多种高价值Token离场
+2022年5月9日, 攻击者通过预言机合约`Chain.sol`的`submit()`函数未授权调用的问题,
+
+恶意操纵了`FTS`的价格, 用原本低价值`FTS`抵押借贷了多种高价值Token离场
 
 <img width="962" alt="submit" src="https://user-images.githubusercontent.com/33406415/168532696-f205536f-f284-47bd-bb3a-ba0ccb6e9bc6.png">
-
 
 但其实攻击者早在4月就已经开始了前置准备工作:
 
@@ -36,6 +37,7 @@
 2. 5月2日,发布恶意提案
 
 因为在此前`FTS`并不是官方承认的抵押物, 并不能凭`FTS`借出其他Token
+
 所以提案内容就是把`FTS`添加进`collateral`的名单中
 
 ```
@@ -57,6 +59,7 @@ https://bsc.fortress.loans/vote/proposal/11
 ## DEUS
 
 2022年4月28日, DEUS所使用的`Muon VWAP`预言机被恶意操纵价格, 导致`DEI`的价格翻了20倍.
+
 攻击者用`DEI`超额借出约1300万美金的资产离场
 
 1. 跨链转入两百多万的`USDC`作为攻击预备资金
@@ -71,7 +74,8 @@ https://bsc.fortress.loans/vote/proposal/11
 
 (在Trace中点开至少22*3层嵌套才找到核心攻击逻辑是一种怎样的体验?)
 
-这一举动几乎借空了`Fantom`链上的1.4亿`USDC`, 再次在`USDC/DEI`交易对上兑换`DEI`, 
+这一举动几乎借空了`Fantom`链上的1.4亿`USDC`, 再次在`USDC/DEI`交易对上兑换`DEI`
+
 确保`USDC/DEI`交易对的价格和`Muon VWAP`预言机的链下签名喂价保持一致.
 
 ```
@@ -82,7 +86,6 @@ https://ftmscan.com/tx/0x39825ff84b44d9c9983b4cff464d4746d1ae5432977b9a65a92ab47
 
 
 4. 最后抵押`USDC/DEI`的LPToken, 借走1700万的`DEI`, 换回`USDC`, 归还22个闪电贷, 带着约1300万美元的利润跨链离场
-
 
 ```
 https://ftmscan.com/address/0x750007753eCf93CeF7cFDe8D1Bef3AE5ea1234Cc#tokentxns
@@ -123,12 +126,16 @@ https://etherscan.io/tx/0x20a6dcff06a791a7f8be9f423053ce8caee3f9eecc31df32445fc9
 
 <img width="1277" alt="eth-inv" src="https://user-images.githubusercontent.com/33406415/168532834-a2bb84dc-5771-499f-b0fe-c10d16762417.png">
 
-一定程度是因为`Inverse Finance`所使用的预言机为`Sushi Twap`, 
-它会采样每个块的第一笔与`INV`有关的历史交易价格作为参考,加权平均算出当前价格.
+说一定程度是因为`Inverse Finance`所使用的预言机为`Sushi Twap`
+
+它会采样每个块的第一笔与`INV`有关的历史交易价格作为参考,加权平均算出当前价格
+
 也就是说, 攻击者需要在时间窗口期,多个块区间内维持这一扭曲的价格.
 
-3. 于是攻击者开始通过多个地址发布垃圾交易, 挤占整个区块, 
-排挤掉其他正常的交易, 确保扭曲的价格不被其他人破坏, 
+3. 于是攻击者开始通过多个地址发布垃圾交易, 挤占整个区块
+ 
+排挤掉其他正常的交易, 确保扭曲的价格不被其他人破坏
+
 攻击者通过`Disperse`把361.5个`ETH`平均分给了241个地址
 
 ```
