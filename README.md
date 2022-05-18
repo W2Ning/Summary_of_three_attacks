@@ -29,7 +29,7 @@
 
 但其实攻击者早在4月就已经开始了前置准备工作:
 
-1. 4月27日,分配购买大量的`FTS`
+1. 4月27日,分批购买大量的`FTS`
 
 <img width="746" alt="4 27" src="https://user-images.githubusercontent.com/33406415/168532713-77c5e30b-6e06-4838-b9f4-893e25f99ba0.png">
 
